@@ -1,11 +1,9 @@
-import React from 'react';
-import CurrencyConverter from './components/CurrencyConverter'; // Импортируйте CurrencyConverter
-import './App.css';
+import CurrencyConverter from "./components/CurrencyConverter";
+import "./App.css"; // Подключаем глобальные стили
 
 function App() {
   return (
     <div className="App">
-      <h1>Check live foreign currency exchange rates</h1>
       <CurrencyConverter />
     </div>
   );

@@ -1,15 +1,11 @@
-import React from 'react';
+import "./CurrencySelect.css"; // Подключаем стили
 
-const CurrencySelect = ({ currency, setCurrency }) => {
-  const currencies = ['USD', 'EUR', 'GBP', 'JPY', 'BTC'];
-
+const CurrencySelect = ({ value, onChange }) => {
   return (
-    <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-      {currencies.map((curr) => (
-        <option key={curr} value={curr}>
-          {curr}
-        </option>
-      ))}
+    <select value={value} onChange={(e) => onChange(e.target.value)} className="select-field">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="GBP">GBP</option>
     </select>
   );
 };

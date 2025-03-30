@@ -1,0 +1,10 @@
+.select-field {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #374151;
+    color: white;
+    text-align: center;
+  }
