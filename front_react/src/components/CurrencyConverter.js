@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import CurrencySelect from "./CurrencySelect";
+import { fetchExchangeRate } from "../api"; // Импортируем API для получения курсов валют
 import "./CurrencyConverter.css"; // Подключаем стили
 
 const CurrencyConverter = () => {
   const [amount, setAmount] = useState(1);
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("EUR");
+  const [exchangeRate, setExchangeRate] = useState(null);
+  const [result, setResult] = useState(0);
+
+  // Функция для получения курса валют
+  useEffect(() => {
+    async function getRate() {
+      try {
+        const rate = await fetchExchangeRate(fromCurrency, toCurrency);
+        if (typeof rate === "number") {
+          setExchangeRate(rate); // Устанавливаем только если это число
+        } else {
+          console.error("Invalid exchange rate received:", rate);
+        }
+      } catch (error) {
+        console.error("Error fetching exchange rate:", error);
+      }
+    }
+    getRate();
+  }, [fromCurrency, toCurrency]); // Зависимости - обновление валют
+
+  // Рассчитываем результат при изменении суммы или курса
+  useEffect(() => {
+    if (exchangeRate) {
+      setResult((amount * exchangeRate).toFixed(2)); // Убедимся, что exchangeRate — это число
+    }
+  }, [amount, exchangeRate]);
 
   return (
     <div className="converter-container">
@@ -19,12 +46,16 @@ const CurrencyConverter = () => {
           className="input-field"
         />
         <div className="select-container">
+          {/* Используем CurrencySelect для выбора валюты */}
           <CurrencySelect value={fromCurrency} onChange={setFromCurrency} />
           <div className="icon-box">
             <ArrowLeftRight className="icon" />
           </div>
           <CurrencySelect value={toCurrency} onChange={setToCurrency} />
         </div>
+        <h3 className="result">
+          {exchangeRate ? `Result: ${result} ${toCurrency}` : "Loading..."}
+        </h3>
         <button className="convert-button">Convert</button>
       </div>
     </div>

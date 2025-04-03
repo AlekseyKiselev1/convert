@@ -1,5 +1,5 @@
 import CurrencyConverter from "./components/CurrencyConverter";
-import "./App.css"; // Подключаем глобальные стили
+import "./App.css"; 
 
 function App() {
   return (
