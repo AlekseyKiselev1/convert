@@ -1,10 +1,37 @@
-.select-field {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    background: #374151;
-    color: white;
-    text-align: center;
-  }
+.select-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.select-container select {
+  width: 100%;  /* Это гарантирует, что select займет всю ширину контейнера */
+}
+select {
+  width: 100%;
+  padding: 16px 24px; /* Увеличиваем внутренние отступы */
+  font-size: 20px; /* Увеличиваем размер шрифта */
+  background-color: #374151; /* Фон кнопки */
+  color: white; /* Цвет текста */
+  border: none;
+  border-radius: 12px; /* Закругленные углы */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Плавное изменение фона и увеличение */
+}
+
+select:hover {
+  background-color: #2d3a46; /* Темнеет при наведении */
+  transform: scale(1.05); /* Легкое увеличение при наведении */
+}
+
+option {
+  background-color: #374151; /* Фон для опций */
+  color: white; /* Цвет текста */
+}
+
+select:focus {
+  outline: none; /* Убираем стандартный контур */
+  box-shadow: 0 0 8px rgba(0, 150, 255, 0.7); /* Синий светящийся контур при фокусе */
+}
