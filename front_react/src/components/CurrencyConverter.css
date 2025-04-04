@@ -41,18 +41,20 @@
   
   .icon-box {
     background: #374151;
-    padding: 10px;
+    padding: 10px; 
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 10px; 
+    height: 10px; 
   }
   
   .icon {
-    font-size: 24px;
+    font-size: 20px; 
     color: white;
   }
-  
+
   .convert-button {
     width: 100%;
     padding: 12px;
