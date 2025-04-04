@@ -1,5 +1,97 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+.converter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #111827;
+  position: relative;
+}
+
+.top-left-image {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 210px;
+  height: 210px;
+  opacity: 0.9;
+  z-index: 10;
+  background-image: url('./images/bitcoin.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.bottom-right-image {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 290px;
+  height: 290px;
+  opacity: 0.9;
+  z-index: 10;
+  background-image: url('./images/ethereum.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.converter-card {
+  background: #1f2937;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 350px;
+}
+
+.title {
+  color: white;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #374151;
+  color: white;
+  text-align: center;
+}
+
+.select-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.icon-box {
+  background: #374151;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 24px;
+  color: white;
+}
+
+.convert-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(to right, #ec4899, #ef4444);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.convert-button:hover {
+  opacity: 0.8;
 }
