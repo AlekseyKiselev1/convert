@@ -1,39 +1,40 @@
 import { useState, useEffect } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import CurrencySelect from "./CurrencySelect";
-import { fetchExchangeRate } from "../api"; // Импортируем API для получения курсов валют
-import "./CurrencyConverter.css"; // Подключаем стили
+import { fetchExchangeRate } from "../api";
+import "./CurrencyConverter.css";
 
 const CurrencyConverter = () => {
   const [amount, setAmount] = useState(1);
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("EUR");
   const [exchangeRate, setExchangeRate] = useState(null);
-  const [result, setResult] = useState(0);
+  const [result, setResult] = useState(null);
+  const [isConverted, setIsConverted] = useState(false);
 
-  // Функция для получения курса валют
-  useEffect(() => {
-    async function getRate() {
-      try {
-        const rate = await fetchExchangeRate(fromCurrency, toCurrency);
-        if (typeof rate === "number") {
-          setExchangeRate(rate); // Устанавливаем только если это число
-        } else {
-          console.error("Invalid exchange rate received:", rate);
-        }
-      } catch (error) {
-        console.error("Error fetching exchange rate:", error);
+  const getRate = async () => {
+    try {
+      const rate = await fetchExchangeRate(fromCurrency, toCurrency);
+      if (typeof rate === "number") {
+        setExchangeRate(rate);
+      } else {
+        console.error("Invalid exchange rate received:", rate);
       }
+    } catch (error) {
+      console.error("Error fetching exchange rate:", error);
     }
-    getRate();
-  }, [fromCurrency, toCurrency]); // Зависимости - обновление валют
+  };
 
-  // Рассчитываем результат при изменении суммы или курса
+  const handleConvert = () => {
+    getRate();
+    setIsConverted(true);
+  };
+
   useEffect(() => {
-    if (exchangeRate) {
-      setResult((amount * exchangeRate).toFixed(2)); // Убедимся, что exchangeRate — это число
+    if (isConverted && exchangeRate) {
+      setResult((amount * exchangeRate).toFixed(2));
     }
-  }, [amount, exchangeRate]);
+  }, [amount, exchangeRate, isConverted]);
 
   return (
     <div className="converter-container">
@@ -46,7 +47,6 @@ const CurrencyConverter = () => {
           className="input-field"
         />
         <div className="select-container">
-          {/* Используем CurrencySelect для выбора валюты */}
           <CurrencySelect value={fromCurrency} onChange={setFromCurrency} />
           <div className="icon-box">
             <ArrowLeftRight className="icon" />
@@ -54,9 +54,15 @@ const CurrencyConverter = () => {
           <CurrencySelect value={toCurrency} onChange={setToCurrency} />
         </div>
         <h3 className="result">
-          {exchangeRate ? `Result: ${result} ${toCurrency}` : "Loading..."}
+          {isConverted
+            ? exchangeRate
+              ? `Result: ${result} ${toCurrency}`
+              : "Loading..."
+            : "Press Convert to see result"}
         </h3>
-        <button className="convert-button">Convert</button>
+        <button className="convert-button" onClick={handleConvert}>
+          Convert
+        </button>
       </div>
     </div>
   );

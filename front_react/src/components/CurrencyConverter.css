@@ -1,3 +1,6 @@
+.result {
+  color: white;
+}
 .converter-container {
   display: flex;
   justify-content: center;
