@@ -15,11 +15,7 @@ const CurrencyConverter = () => {
   const getRate = async () => {
     try {
       const rate = await fetchExchangeRate(fromCurrency, toCurrency);
-      if (typeof rate === "number") {
-        setExchangeRate(rate);
-      } else {
-        console.error("Invalid exchange rate received:", rate);
-      }
+      setExchangeRate(rate);
     } catch (error) {
       console.error("Error fetching exchange rate:", error);
     }
@@ -29,6 +25,16 @@ const CurrencyConverter = () => {
     getRate();
     setIsConverted(true);
   };
+
+  function handleSwapCurrencies() {
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+  }
+
+  useEffect(() => {
+    handleConvert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toCurrency, fromCurrency]);
 
   useEffect(() => {
     if (isConverted && exchangeRate) {
@@ -48,7 +54,7 @@ const CurrencyConverter = () => {
         />
         <div className="select-container">
           <CurrencySelect value={fromCurrency} onChange={setFromCurrency} />
-          <div className="icon-box">
+          <div className="icon-box" onClick={handleSwapCurrencies}>
             <ArrowLeftRight className="icon" />
           </div>
           <CurrencySelect value={toCurrency} onChange={setToCurrency} />
