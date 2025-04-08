@@ -1,13 +1,15 @@
 import React from "react";
-import "./CurrencySelect.css"; 
+import "./CurrencySelect.css";
+import { CurrencyList } from "../constants";
 
 const CurrencySelect = ({ value, onChange }) => {
   return (
     <select value={value} onChange={(e) => onChange(e.target.value)}>
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="RUB">RUB</option>
-      <option value="BYN">BYN</option>
+      {CurrencyList.map((currency) => (
+        <option key={currency} value={currency}>
+          {currency}
+        </option>
+      ))}
     </select>
   );
 };

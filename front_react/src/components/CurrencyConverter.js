@@ -2,34 +2,37 @@ import { useState, useEffect } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import CurrencySelect from "./CurrencySelect";
 import { fetchExchangeRate } from "../api";
+import { CurrencyEnum } from "../constants";
 import "./CurrencyConverter.css";
 
 const CurrencyConverter = () => {
   const [amount, setAmount] = useState(1);
-  const [fromCurrency, setFromCurrency] = useState("USD");
-  const [toCurrency, setToCurrency] = useState("EUR");
+  const [fromCurrency, setFromCurrency] = useState(CurrencyEnum.USD);
+  const [toCurrency, setToCurrency] = useState(CurrencyEnum.EUR);
   const [exchangeRate, setExchangeRate] = useState(null);
   const [result, setResult] = useState(null);
-  const [isConverted, setIsConverted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getRate = async () => {
+    setIsLoading(true);
     try {
       const rate = await fetchExchangeRate(fromCurrency, toCurrency);
       setExchangeRate(rate);
     } catch (error) {
       console.error("Error fetching exchange rate:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleConvert = () => {
     getRate();
-    setIsConverted(true);
   };
 
-  function handleSwapCurrencies() {
+  const handleSwapCurrencies = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
-  }
+  };
 
   useEffect(() => {
     handleConvert();
@@ -37,10 +40,10 @@ const CurrencyConverter = () => {
   }, [toCurrency, fromCurrency]);
 
   useEffect(() => {
-    if (isConverted && exchangeRate) {
+    if (!isLoading && exchangeRate !== null) {
       setResult((amount * exchangeRate).toFixed(2));
     }
-  }, [amount, exchangeRate, isConverted]);
+  }, [amount, exchangeRate, isLoading]);
 
   return (
     <div className="converter-container">
@@ -60,10 +63,10 @@ const CurrencyConverter = () => {
           <CurrencySelect value={toCurrency} onChange={setToCurrency} />
         </div>
         <h3 className="result">
-          {isConverted
-            ? exchangeRate
-              ? `Result: ${result} ${toCurrency}`
-              : "Loading..."
+          {isLoading
+            ? "Loading..."
+            : result !== null
+            ? `Result: ${result} ${toCurrency}`
             : "Press Convert to see result"}
         </h3>
         <button className="convert-button" onClick={handleConvert}>
