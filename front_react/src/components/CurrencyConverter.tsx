@@ -6,12 +6,12 @@ import { CurrencyEnum } from "../constants";
 import "./CurrencyConverter.css";
 
 const CurrencyConverter = () => {
-  const [amount, setAmount] = useState(1);
-  const [fromCurrency, setFromCurrency] = useState(CurrencyEnum.USD);
-  const [toCurrency, setToCurrency] = useState(CurrencyEnum.EUR);
-  const [exchangeRate, setExchangeRate] = useState(null);
-  const [result, setResult] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [amount, setAmount] = useState<number>(1);
+  const [fromCurrency, setFromCurrency] = useState<CurrencyEnum>(CurrencyEnum.USD);
+  const [toCurrency, setToCurrency] = useState<CurrencyEnum>(CurrencyEnum.EUR);
+  const [exchangeRate, setExchangeRate] = useState<number | null>(null);
+  const [result, setResult] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getRate = async () => {
     setIsLoading(true);
@@ -52,7 +52,7 @@ const CurrencyConverter = () => {
         <input
           type="number"
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => setAmount(Number(e.target.value))}
           className="input-field"
         />
         <div className="select-container">

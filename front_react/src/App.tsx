@@ -8,9 +8,7 @@ function App() {
   return (
     <div className="App">
       <img src={bitcoin} alt="Bitcoin" className="top-left-image" />
-      
       <CurrencyConverter />
-
       <img src={ethereum} alt="Ethereum" className="bottom-right-image" />
     </div>
   );

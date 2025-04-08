@@ -7,58 +7,28 @@
 }
 
 .select-container select {
-  width: 100%;  
-}
-select {
   width: 100%;
-  padding: 16px 24px; 
-  font-size: 20px; 
-  background-color: #374151; 
-  color: white; 
+  padding: 16px 24px;
+  font-size: 20px;
+  background-color: #374151;
+  color: white;
   border: none;
-  border-radius: 12px; 
+  border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease; 
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-select:hover {
+.select-container select:hover {
   background-color: #2d3a46;
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
-option {
-  background-color: #374151; 
-  color: white; 
-}
-
-select:focus {
-  outline: none; 
-  box-shadow: 0 0 8px rgba(0, 150, 255, 0.7); 
-  width: 100%;  
-}
-select {
-  width: 100%;
-  padding: 16px 24px; 
-  font-size: 20px; 
-  background-color: #374151; 
-  color: white; 
-  border: none;
-  border-radius: 12px; 
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease; 
-}
-
-select:hover {
-  background-color: #2d3a46; 
-  transform: scale(1.05); 
-}
-
-option {
-  background-color: #374151; 
+.select-container option {
+  background-color: #374151;
   color: white;
 }
 
-select:focus {
-  outline: none; 
-  box-shadow: 0 0 8px rgba(0, 150, 255, 0.7); 
+.select-container select:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 150, 255, 0.7);
 }
