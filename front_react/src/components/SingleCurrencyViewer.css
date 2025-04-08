@@ -1,0 +1,73 @@
+.select-container select {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #374151;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .select-container select:hover {
+    background-color: #2d3a46;
+  }
+  
+  .currency-item {
+    display: flex;
+    align-items: center;
+    background-color: #374151;
+    padding: 8px 16px;
+    border-radius: 12px;
+    color: white;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .icon-box {
+    background: #374151;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon {
+    font-size: 24px;
+    color: white;
+  }
+  
+  .currency-item button {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .currency-item button:hover {
+    background-color: #dc2626;
+  }
+  
+  .currency-list {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .added-currencies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .add-currency {
+    margin-top: 20px;
+    width: 100%;
+  }
