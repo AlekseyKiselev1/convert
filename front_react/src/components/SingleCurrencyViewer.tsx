@@ -6,7 +6,7 @@ import "./SingleCurrencyViewer.css";
 
 const SingleCurrencyViewer: React.FC = () => {
   const [baseCurrency, setBaseCurrency] = useState<CurrencyEnum>(CurrencyEnum.USD);
-  const [rates, setRates] = useState<{ [key: string]: number }>({});
+  const [rates, setRates] = useState<Record<string, number>>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currenciesToCompare, setCurrenciesToCompare] = useState<CurrencyEnum[]>([]);
 
@@ -31,6 +31,7 @@ const SingleCurrencyViewer: React.FC = () => {
     if (currenciesToCompare.length > 0) {
       fetchRates();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [baseCurrency, currenciesToCompare]);
 
   const addCurrency = (currency: CurrencyEnum) => {
@@ -73,7 +74,7 @@ const SingleCurrencyViewer: React.FC = () => {
           <div className="add-currency">
             <CurrencySelect
               value={baseCurrency}
-              onChange={(value: CurrencyEnum) => addCurrency(value)}
+              onChange={(value) => addCurrency(value)}
             />
           </div>
         </div>
