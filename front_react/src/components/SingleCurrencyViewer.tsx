@@ -44,11 +44,26 @@ const SingleCurrencyViewer: React.FC = () => {
     setCurrenciesToCompare((prev) => prev.filter((c) => c !== currency));
   };
 
+  const renderRateResults = () => {
+    return Object.entries(rates).map(([currency, rate]) => {
+      const isCompared = currenciesToCompare.includes(currency as CurrencyEnum);
+      const isBase = currency === baseCurrency;
+
+      if (isCompared || isBase) return null;
+
+      return (
+        <p key={currency}>
+          1 {baseCurrency} = {rate.toFixed(4)} {currency}
+        </p>
+      );
+    });
+  };
+
   return (
     <div className="converter-container">
       <div className="converter-card">
         <h2 className="title">Exchange rates from one base currency</h2>
-        <CurrencySelect value={baseCurrency} onChange={(value: CurrencyEnum) => setBaseCurrency(value)} />
+        <CurrencySelect value={baseCurrency} onChange={setBaseCurrency} />
         
         <div className="currency-list">
           <h3>Compare with:</h3>
@@ -82,15 +97,7 @@ const SingleCurrencyViewer: React.FC = () => {
         {isLoading ? (
           <p className="result">Loading...</p>
         ) : (
-          <div className="result">
-            {Object.entries(rates).map(([currency, rate]) => (
-              !currenciesToCompare.includes(currency as CurrencyEnum) && currency !== baseCurrency && (
-                <p key={currency}>
-                  1 {baseCurrency} = {rate.toFixed(4)} {currency}
-                </p>
-              )
-            ))}
-          </div>
+          <div className="result">{renderRateResults()}</div>
         )}
       </div>
     </div>

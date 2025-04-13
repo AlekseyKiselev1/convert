@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { NavLink, Routes, Route } from "react-router-dom";
 import CurrencyConverter from "./components/CurrencyConverter";
 import SingleCurrencyViewer from "./components/SingleCurrencyViewer";
 import "./App.css";
@@ -6,29 +7,33 @@ import bitcoin from "./images/bitcoin.png";
 import ethereum from "./images/ethereum.png";
 
 function App() {
-  const [mode, setMode] = useState<"converter" | "single">("converter");
-
   return (
     <div className="App">
       <img src={bitcoin} alt="Bitcoin" className="top-left-image" />
 
       <div className="mode-switch">
-        <button
-          className={`mode-button ${mode === "converter" ? "active" : ""}`}
-          onClick={() => setMode("converter")}
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) => `mode-button ${isActive ? "active" : ""}`}
         >
           Converter
-        </button>
-        <button
-          className={`mode-button ${mode === "single" ? "active" : ""}`}
-          onClick={() => setMode("single")}
+        </NavLink>
+        <NavLink
+          to="/single"
+          className={({ isActive }) => `mode-button ${isActive ? "active" : ""}`}
         >
           Single
-        </button>
-        <div className={`underline ${mode === "single" ? "single" : "converter"}`}></div>
+        </NavLink>
+        <div className="underline-container">
+          <div className="underline-bg"></div>
+        </div>
       </div>
 
-      {mode === "converter" ? <CurrencyConverter /> : <SingleCurrencyViewer />}
+      <Routes>
+        <Route path="/" element={<CurrencyConverter />} />
+        <Route path="/single" element={<SingleCurrencyViewer />} />
+      </Routes>
 
       <img src={ethereum} alt="Ethereum" className="bottom-right-image" />
     </div>

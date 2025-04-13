@@ -4,18 +4,20 @@
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
 .mode-switch {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0;
+  margin: 30px 0;
   position: relative;
-  padding: 0;
 }
 
-.mode-switch button {
+.mode-switch .mode-button {
   background-color: #374151;
   color: white;
   border: none;
@@ -25,40 +27,34 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin: 0 10px;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.mode-switch button.active {
+.mode-switch .mode-button.active {
   background-color: #1f2937;
 }
 
-.mode-switch button:hover {
+.mode-switch .mode-button:hover {
   background-color: #2d3a46;
 }
 
-.mode-switch .underline {
-  width: 100%;
-  height: 4px;
-  background-color: #374151;
+/* Optional underline styling if needed */
+.underline-container {
   position: absolute;
   bottom: -5px;
-  transition: transform 0.3s ease;
-}
-
-.mode-switch .underline.single {
-  transform: translateX(100%);
-}
-
-.mode-switch .underline.converter {
-  transform: translateX(0);
-}
-
-.converter-container {
+  width: 100%;
+  height: 4px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: #111827;
-  position: relative;
+}
+
+.underline-bg {
+  width: 200px;
+  height: 4px;
+  background-color: #374151;
+  border-radius: 2px;
+  transition: transform 0.3s ease;
 }
 
 .top-left-image {
@@ -69,9 +65,6 @@
   height: 210px;
   opacity: 0.9;
   z-index: 10;
-  background-image: url('./images/bitcoin.png');
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .bottom-right-image {
@@ -82,9 +75,15 @@
   height: 290px;
   opacity: 0.9;
   z-index: 10;
-  background-image: url('./images/ethereum.png');
-  background-size: contain;
-  background-repeat: no-repeat;
+}
+
+.converter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: #111827;
+  position: relative;
 }
 
 .converter-card {

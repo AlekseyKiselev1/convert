@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
-import { ArrowLeftRight } from "lucide-react";
-import CurrencySelect from "./CurrencySelect";
-import { fetchExchangeRate } from "../api";
+import React, { useState, useEffect } from "react";
 import { CurrencyEnum } from "../constants";
+import { fetchExchangeRate } from "../api";
+import CurrencySelect from "./CurrencySelect";
 import "./CurrencyConverter.css";
 
-const CurrencyConverter = () => {
+const CurrencyConverter: React.FC = () => {
   const [amount, setAmount] = useState<number>(1);
   const [fromCurrency, setFromCurrency] = useState<CurrencyEnum>(CurrencyEnum.USD);
   const [toCurrency, setToCurrency] = useState<CurrencyEnum>(CurrencyEnum.EUR);
@@ -36,7 +35,6 @@ const CurrencyConverter = () => {
 
   useEffect(() => {
     handleConvert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toCurrency, fromCurrency]);
 
   useEffect(() => {
@@ -58,7 +56,7 @@ const CurrencyConverter = () => {
         <div className="select-container">
           <CurrencySelect value={fromCurrency} onChange={setFromCurrency} />
           <div className="icon-box" onClick={handleSwapCurrencies}>
-            <ArrowLeftRight className="icon" />
+            <span>⇆</span>
           </div>
           <CurrencySelect value={toCurrency} onChange={setToCurrency} />
         </div>
