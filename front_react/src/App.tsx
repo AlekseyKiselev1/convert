@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, Routes, Route } from "react-router-dom";
 import CurrencyConverter from "./components/CurrencyConverter";
 import SingleCurrencyViewer from "./components/SingleCurrencyViewer";
+import AllCurrenciesViewer from "./components/AllCurrenciesViewer";  // Добавляем новую страницу
 import "./App.css";
 import bitcoin from "./images/bitcoin.png";
 import ethereum from "./images/ethereum.png";
@@ -9,7 +10,7 @@ import ethereum from "./images/ethereum.png";
 function App() {
   return (
     <div className="App">
-      <img src={bitcoin} alt="Bitcoin" className="top-left-image" />
+      <img src={bitcoin} alt="Bitcoin" className="top-left-image" />  {/* Изображение Bitcoin */}
 
       <div className="mode-switch">
         <NavLink
@@ -25,6 +26,12 @@ function App() {
         >
           Single
         </NavLink>
+        <NavLink
+          to="/all-currencies"
+          className={({ isActive }) => `mode-button ${isActive ? "active" : ""}`}
+        >
+          All Currencies
+        </NavLink>
         <div className="underline-container">
           <div className="underline-bg"></div>
         </div>
@@ -33,9 +40,10 @@ function App() {
       <Routes>
         <Route path="/" element={<CurrencyConverter />} />
         <Route path="/single" element={<SingleCurrencyViewer />} />
+        <Route path="/all-currencies" element={<AllCurrenciesViewer />} />  {/* Новый маршрут */}
       </Routes>
 
-      <img src={ethereum} alt="Ethereum" className="bottom-right-image" />
+      <img src={ethereum} alt="Ethereum" className="bottom-right-image" />  {/* Изображение Ethereum */}
     </div>
   );
 }

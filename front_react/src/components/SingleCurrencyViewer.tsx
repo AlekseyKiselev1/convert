@@ -31,7 +31,7 @@ const SingleCurrencyViewer: React.FC = () => {
     if (currenciesToCompare.length > 0) {
       fetchRates();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [baseCurrency, currenciesToCompare]);
 
   const addCurrency = (currency: CurrencyEnum) => {
@@ -63,8 +63,10 @@ const SingleCurrencyViewer: React.FC = () => {
     <div className="converter-container">
       <div className="converter-card">
         <h2 className="title">Exchange rates from one base currency</h2>
-        <CurrencySelect value={baseCurrency} onChange={setBaseCurrency} />
-        
+        <div className="select-container">
+          <CurrencySelect value={baseCurrency} onChange={setBaseCurrency} />
+        </div>
+
         <div className="currency-list">
           <h3>Compare with:</h3>
           <div className="added-currencies">
@@ -86,7 +88,7 @@ const SingleCurrencyViewer: React.FC = () => {
             )}
           </div>
 
-          <div className="add-currency">
+          <div className="add-currency select-container">
             <CurrencySelect
               value={baseCurrency}
               onChange={(value) => addCurrency(value)}

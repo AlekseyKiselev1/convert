@@ -14,7 +14,6 @@
   justify-content: center;
   align-items: center;
   margin: 30px 0;
-  position: relative;
 }
 
 .mode-switch .mode-button {
@@ -39,7 +38,6 @@
   background-color: #2d3a46;
 }
 
-/* Optional underline styling if needed */
 .underline-container {
   position: absolute;
   bottom: -5px;
@@ -79,11 +77,12 @@
 
 .converter-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
+  justify-content: center; 
+  align-items: center;     
+  height: 100vh;          
   background: #111827;
   position: relative;
+  overflow: hidden; 
 }
 
 .converter-card {
