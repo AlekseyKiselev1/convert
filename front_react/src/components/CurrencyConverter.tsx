@@ -35,6 +35,7 @@ const CurrencyConverter: React.FC = () => {
 
   useEffect(() => {
     handleConvert();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toCurrency, fromCurrency]);
 
   useEffect(() => {

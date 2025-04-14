@@ -41,7 +41,7 @@ const AllCurrenciesViewer: React.FC = () => {
   return (
     <div className="converter-container">
       <div className="converter-card">
-        <h2>Все валюты - Курсы</h2>
+        <h2>All Rates</h2>
         <div className="currency-list">
           {Object.entries(rates).map(([currency, rate]) => (
             <div key={currency} className="all-currency-item">
