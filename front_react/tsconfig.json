@@ -14,5 +14,5 @@
     "noEmit": true,
     "allowJs": true
   },
-  "include": ["src"]
+  "include": ["src", "proxyServer.js"]
 }

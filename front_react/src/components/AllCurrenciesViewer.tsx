@@ -10,12 +10,19 @@ const AllCurrenciesViewer: React.FC = () => {
   const fetchRates = async () => {
     const newRates: { [key: string]: number } = {};
     const currencies = Object.values(CurrencyEnum);
+//Кэширование через lockal storage
+// 1 функция FetchRates либо FetchExchanges
+//2 вначале проверить localstorage ключик на наличие данныз (данные={1Result:ответ бэка,2Date время кэширования}, )
+//3 если данные есть и Date.now -24 часа > чем Date.cash то возвращаем данные с кэша 
+//4если нету данных или Date.now -24 часа< чем Date.cash - делаем запрос на бэк, 
+//5 сохраняем полученный ответ с бэка в кэш
 
-    try {
+// tofixed в api 
+try {
       setLoading(true); 
-      for (const currency of currencies) {
+      for (const currency of currencies) { //Promise.all,Promise.allSetalt 
         const rate = await fetchExchangeRate(baseCurrency, currency);
-        newRates[currency] = rate;
+        newRates[currency] = rate;  
       }
       setRates(newRates);
     } catch (err) {
