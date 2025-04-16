@@ -1,7 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const API_KEY = process.env.REACT_APP_EXCHANGE_RATE_API_KEY;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const BASE_URL = "https://v6.exchangerate-api.com/v6/";
+const API_URL = process.env.REACT_APP_API_URL;
 
 interface FetchExchangeRateResponse {
   conversion_rates: { [key: string]: number };
@@ -12,9 +9,9 @@ export async function fetchExchangeRate(
   targetCurrency: string
 ): Promise<number> {
   const response = await fetch(
-    `http://localhost:3000/latest?base=${baseCurrency}&symbols=${targetCurrency}`
+    `${API_URL}/latest?base=${baseCurrency}&symbols=${targetCurrency}`
   );
-// localhost:3000 перенести в .env 
+
   const data: FetchExchangeRateResponse = await response.json();
 
   if (!data.conversion_rates) {
