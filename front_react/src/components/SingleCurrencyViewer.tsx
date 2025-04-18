@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CurrencyEnum } from "../constants";
 import { fetchExchangeRate } from "../api";
 import CurrencySelect from "./CurrencySelect";
+import { formatRate } from "../utils/formatRate";
 import "./SingleCurrencyViewer.css";
 
 const SingleCurrencyViewer: React.FC = () => {
@@ -53,7 +54,7 @@ const SingleCurrencyViewer: React.FC = () => {
 
       return (
         <p key={currency}>
-          1 {baseCurrency} = {rate.toFixed(4)} {currency}
+          1 {baseCurrency} = {formatRate(rate, 4)} {currency}
         </p>
       );
     });
@@ -74,7 +75,7 @@ const SingleCurrencyViewer: React.FC = () => {
               currenciesToCompare.map((currency) => (
                 <div key={currency} className="currency-item">
                   <span className="currency-info">
-                    {rates[currency] ? `${rates[currency].toFixed(4)} ${currency}` : "Loading..."}
+                    {rates[currency] ? `${formatRate(rates[currency], 4)} ${currency}` : "Loading..."}
                   </span>
                   <div className="icon-box">
                     <button onClick={() => removeCurrency(currency)} className="remove-button">

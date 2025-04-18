@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CurrencyEnum } from "../constants";
 import { fetchExchangeRate } from "../api";
 import CurrencySelect from "./CurrencySelect";
+import { formatRate } from "../utils/formatRate";
 import "./CurrencyConverter.css";
 
 const CurrencyConverter: React.FC = () => {
@@ -40,7 +41,7 @@ const CurrencyConverter: React.FC = () => {
 
   useEffect(() => {
     if (!isLoading && exchangeRate !== null) {
-      setResult((amount * exchangeRate).toFixed(2));
+      setResult(formatRate(amount * exchangeRate, 2));
     }
   }, [amount, exchangeRate, isLoading]);
 

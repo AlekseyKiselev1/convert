@@ -1,34 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { fetchExchangeRate } from "../api";
 import { CurrencyEnum } from "../constants";
+import { formatRate } from "../utils/formatRate";
+
+const CACHE_KEY = "exchangeRatesCache";
+const CACHE_TTL = 24 * 60 * 60 * 1000;
+
+interface CachedData {
+  rates: Record<string, number>;
+  timestamp: number;
+}
 
 const AllCurrenciesViewer: React.FC = () => {
   const [rates, setRates] = useState<Record<string, number>>({});
-  const [baseCurrency] = useState<CurrencyEnum>(CurrencyEnum.USD);  
-  const [loading, setLoading] = useState<boolean>(true);  
-  const [error, setError] = useState<string>("");  
-  const fetchRates = async () => {
-    const newRates: { [key: string]: number } = {};
-    const currencies = Object.values(CurrencyEnum);
-//Кэширование через lockal storage
-// 1 функция FetchRates либо FetchExchanges
-//2 вначале проверить localstorage ключик на наличие данныз (данные={1Result:ответ бэка,2Date время кэширования}, )
-//3 если данные есть и Date.now -24 часа > чем Date.cash то возвращаем данные с кэша 
-//4если нету данных или Date.now -24 часа< чем Date.cash - делаем запрос на бэк, 
-//5 сохраняем полученный ответ с бэка в кэш
+  const [baseCurrency] = useState<CurrencyEnum>(CurrencyEnum.USD);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
-// tofixed в api 
-try {
-      setLoading(true); 
-      for (const currency of currencies) { //Promise.all,Promise.allSetalt 
-        const rate = await fetchExchangeRate(baseCurrency, currency);
-        newRates[currency] = rate;  
+  const fetchRates = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const parsed: CachedData = JSON.parse(cached);
+        const isFresh = Date.now() - parsed.timestamp < CACHE_TTL;
+
+        if (isFresh) {
+          setRates(parsed.rates);
+          setLoading(false);
+          return;
+        }
       }
+
+      const newRates: Record<string, number> = {};
+      const currencies = Object.values(CurrencyEnum);
+
+      const promises = currencies.map(async (currency) => {
+        const rate = await fetchExchangeRate(baseCurrency, currency);
+        newRates[currency] = rate;
+      });
+
+      await Promise.all(promises);
+
       setRates(newRates);
-    } catch (err) {
+      localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({ rates: newRates, timestamp: Date.now() })
+      );
+    } catch {
       setError("Не удалось загрузить данные о курсах.");
     } finally {
-      setLoading(false);  
+      setLoading(false);
     }
   };
 
@@ -38,11 +62,11 @@ try {
   }, [baseCurrency]);
 
   if (loading) {
-    return <div>Загрузка курсов валют...</div>;  
+    return <div>Загрузка курсов валют...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; 
+    return <div>{error}</div>;
   }
 
   return (
@@ -52,7 +76,7 @@ try {
         <div className="currency-list">
           {Object.entries(rates).map(([currency, rate]) => (
             <div key={currency} className="all-currency-item">
-              <span>{currency}: {rate.toFixed(4)}</span>
+              <span>{currency}: {formatRate(rate)}</span>
             </div>
           ))}
         </div>
