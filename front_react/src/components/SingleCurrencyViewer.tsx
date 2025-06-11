@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { CurrencyEnum } from "../constants";
+import { CurrencyEnum, CURRENCY_NAMES } from "../constants";
 import { fetchExchangeRate } from "../api";
 import CurrencySelect from "./CurrencySelect";
 import { formatRate } from "../utils/formatRate";
+import "./CurrencyConverter.css"; 
 import "./SingleCurrencyViewer.css";
 
 const SingleCurrencyViewer: React.FC = () => {
@@ -11,33 +12,39 @@ const SingleCurrencyViewer: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currenciesToCompare, setCurrenciesToCompare] = useState<CurrencyEnum[]>([]);
 
-  const fetchRates = async () => {
-    setIsLoading(true);
-    try {
-      const newRates: { [key: string]: number } = {};
-      const targets = [...currenciesToCompare];
-      for (const target of targets) {
-        const rate = await fetchExchangeRate(baseCurrency, target);
-        newRates[target] = rate;
-      }
-      setRates(newRates);
-    } catch (error) {
-      console.error("Error fetching rates:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    if (currenciesToCompare.length > 0) {
-      fetchRates();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    const fetchRatesForComparison = async () => {
+      if (currenciesToCompare.length === 0) {
+        setRates({});
+        return;
+      }
+      setIsLoading(true);
+      try {
+        const newRates: { [key: string]: number } = {};
+        await Promise.all(
+            currenciesToCompare.map(async (target) => {
+                if (target !== baseCurrency) {
+                    const rate = await fetchExchangeRate(baseCurrency, target);
+                    newRates[target] = rate;
+                } else {
+                    newRates[target] = 1; 
+                }
+            })
+        );
+        setRates(newRates);
+      } catch (error) {
+        console.error("Error fetching rates:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRatesForComparison();
   }, [baseCurrency, currenciesToCompare]);
 
   const addCurrency = (currency: CurrencyEnum) => {
-    if (!currenciesToCompare.includes(currency) && currency !== baseCurrency) {
-      setCurrenciesToCompare((prev) => [...prev, currency]);
+    if (!currenciesToCompare.includes(currency)) {
+      setCurrenciesToCompare((prev) => [...prev, currency].sort());
     }
   };
 
@@ -45,63 +52,47 @@ const SingleCurrencyViewer: React.FC = () => {
     setCurrenciesToCompare((prev) => prev.filter((c) => c !== currency));
   };
 
-  const renderRateResults = () => {
-    return Object.entries(rates).map(([currency, rate]) => {
-      const isCompared = currenciesToCompare.includes(currency as CurrencyEnum);
-      const isBase = currency === baseCurrency;
-
-      if (isCompared || isBase) return null;
-
-      return (
-        <p key={currency}>
-          1 {baseCurrency} = {formatRate(rate, 4)} {currency}
-        </p>
-      );
-    });
-  };
-
   return (
     <div className="converter-container">
       <div className="converter-card">
-        <h2 className="title">Exchange rates from one base currency</h2>
-        <div className="select-container">
+        <h2 className="converter-title">Курсы валют</h2>
+        
+        <div className="input-group">
+          <label>Базовая валюта</label>
           <CurrencySelect value={baseCurrency} onChange={setBaseCurrency} />
         </div>
 
-        <div className="currency-list">
-          <h3>Compare with:</h3>
-          <div className="added-currencies">
-            {currenciesToCompare.length > 0 ? (
-              currenciesToCompare.map((currency) => (
-                <div key={currency} className="currency-item">
-                  <span className="currency-info">
-                    {rates[currency] ? `${formatRate(rates[currency], 4)} ${currency}` : "Loading..."}
-                  </span>
-                  <div className="icon-box">
-                    <button onClick={() => removeCurrency(currency)} className="remove-button">
-                      Remove
-                    </button>
-                  </div>
+        <div className="comparison-list">
+          {isLoading && currenciesToCompare.length > 0 && <p className="loading-text">Обновление курсов...</p>}
+          
+          {currenciesToCompare.length > 0 ? (
+            currenciesToCompare.map((currency) => (
+              <div key={currency} className="comparison-item">
+                <div className="comparison-info">
+                  <span className="comparison-code">{currency}</span>
+                  <span className="comparison-name">{CURRENCY_NAMES[currency]}</span>
                 </div>
-              ))
-            ) : (
-              <p>No currencies added for comparison</p>
-            )}
-          </div>
-
-          <div className="add-currency select-container">
-            <CurrencySelect
-              value={baseCurrency}
-              onChange={(value) => addCurrency(value)}
-            />
-          </div>
+                <div className="comparison-rate">
+                  {rates[currency] ? formatRate(rates[currency], 4) : '...'}
+                </div>
+                <button onClick={() => removeCurrency(currency)} className="remove-button">
+                  ×
+                </button>
+              </div>
+            ))
+          ) : (
+            <p className="placeholder-text">Добавьте валюты для сравнения</p>
+          )}
         </div>
 
-        {isLoading ? (
-          <p className="result">Loading...</p>
-        ) : (
-          <div className="result">{renderRateResults()}</div>
-        )}
+        <div className="input-group">
+           <label>Добавить валюту для сравнения</label>
+           <CurrencySelect
+              value={baseCurrency} 
+              onChange={(value) => addCurrency(value)}
+            />
+        </div>
+
       </div>
     </div>
   );

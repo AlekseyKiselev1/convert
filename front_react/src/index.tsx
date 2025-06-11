@@ -1,8 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'; 
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
-import { BrowserRouter } from 'react-router-dom';
+import { FavoritesProvider } from './context/FavoritesContext';
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
@@ -10,7 +11,9 @@ if (rootElement) {
   root.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App />
+        <FavoritesProvider>
+          <App />
+        </FavoritesProvider>
       </BrowserRouter>
     </React.StrictMode>
   );

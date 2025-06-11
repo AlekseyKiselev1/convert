@@ -1,69 +1,176 @@
 .converter-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: #111827;
+  align-items: flex-start;
+  min-height: 90vh;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .converter-card {
   background: #1f2937;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  width: 350px;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #374151;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.title {
-  color: white;
-  font-size: 18px;
-  margin-bottom: 20px;
+.converter-title {
+  color: #f9fafb;
+  font-size: 1.75rem;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  text-align: left;
 }
 
 .input-field {
   width: 100%;
-  padding: 12px;
-  border: none;
+  padding: 0.75rem 1rem;
+  border: 1px solid #4b5563;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 1.25rem;
   background: #374151;
   color: white;
-  text-align: center;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.icon-box {
-  background: #374151;
-  padding: 10px;
-  border-radius: 8px;
+.input-field:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+}
+
+.controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.swap-button {
+  background: #4b5563;
+  border: 1px solid #6b7280;
+  color: white;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 1.5rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  flex-shrink: 0;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
-.icon {
-  font-size: 20px;
+.swap-button:hover {
+  background-color: #6b7280;
+  transform: rotate(180deg);
+}
+
+.result-area {
+  background: #111827;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
   color: white;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.convert-button {
+.result-area.loading {
+  font-size: 1.2rem;
+  color: #9ca3af;
+}
+
+.result-amount {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.result-currency {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
+}
+
+.rate-info {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.result-area-wrapper {
   width: 100%;
-  padding: 12px;
+}
+
+.result-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111827;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  text-align: left;
+  color: white;
+  min-height: 80px;
+}
+
+.result-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.copy-button {
+  background-color: #374151;
+  color: #d1d5db;
   border: none;
-  border-radius: 8px;
-  background: linear-gradient(to right, #ec4899, #ef4444);
-  color: white;
-  font-size: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   cursor: pointer;
-  transition: opacity 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
-.convert-button:hover {
-  opacity: 0.8;
-}
-
-.result {
+.copy-button:hover:not(:disabled) {
+  background-color: #4b5563;
   color: white;
+}
+
+.copy-button.copied {
+  background-color: #22c55e;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.copy-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

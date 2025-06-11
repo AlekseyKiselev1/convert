@@ -1,73 +1,67 @@
-.select-container select {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    background: #374151;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .select-container select:hover {
-    background-color: #2d3a46;
-  }
-  
-  .currency-item {
-    display: flex;
-    align-items: center;
-    background-color: #374151;
-    padding: 8px 16px;
-    border-radius: 12px;
-    color: white;
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .icon-box {
-    background: #374151;
-    padding: 10px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .icon {
-    font-size: 24px;
-    color: white;
-  }
-  
-  .currency-item button {
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 4px 8px;
-    margin-left: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .currency-item button:hover {
-    background-color: #dc2626;
-  }
-  
-  .currency-list {
-    margin-bottom: 20px;
-    width: 100%;
-  }
-  
-  .added-currencies {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-  }
-  
-  .add-currency {
-    margin-top: 20px;
-    width: 100%;
-  }
+.comparison-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background-color: #111827;
+  padding: 1rem;
+  border-radius: 12px;
+  min-height: 150px;
+}
+
+.comparison-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: #374151;
+  border-radius: 8px;
+  color: white;
+}
+
+.comparison-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.comparison-code {
+  font-weight: bold;
+}
+
+.comparison-name {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.comparison-rate {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-right: 1rem;
+}
+
+.remove-button {
+  background: #4b5563;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.remove-button:hover {
+  background-color: #ef4444; 
+}
+
+.loading-text,
+.placeholder-text {
+  text-align: center;
+  color: #6b7280;
+  padding: 2rem 0;
+  width: 100%;
+}

@@ -3,6 +3,7 @@ import { NavLink, Routes, Route } from "react-router-dom";
 import CurrencyConverter from "./components/CurrencyConverter";
 import SingleCurrencyViewer from "./components/SingleCurrencyViewer";
 import AllCurrenciesViewer from "./components/AllCurrenciesViewer";
+import HistoryViewer from "./components/HistoryViewer";
 import NotFound from "./components/NotFound";
 import { classNames } from "./utils/classNames";
 import "./App.css";
@@ -13,6 +14,16 @@ function App() {
   return (
     <div className="App">
       <img src={bitcoin} alt="Bitcoin" className="top-left-image" />
+
+      <div className="history-link-container">
+        <NavLink
+          to="/history"
+          className={({ isActive }) => classNames("history-button", isActive && "active")}
+        >
+          История
+        </NavLink>
+      </div>
+
       <div className="mode-switch">
         <NavLink
           to="/"
@@ -33,15 +44,13 @@ function App() {
         >
           All Currencies
         </NavLink>
-        <div className="underline-container">
-          <div className="underline-bg"></div>
-        </div>
       </div>
 
       <Routes>
         <Route path="/" element={<CurrencyConverter />} />
         <Route path="/single" element={<SingleCurrencyViewer />} />
         <Route path="/all-currencies" element={<AllCurrenciesViewer />} />
+        <Route path="/history" element={<HistoryViewer />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
